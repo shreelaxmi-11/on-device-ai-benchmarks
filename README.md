@@ -18,18 +18,18 @@ This repo runs real models through real inference stacks and records what actual
 
 ### MLX — LLM Inference (Apple Silicon GPU + Neural Engine)
 
-Benchmark: 47 prompt tokens → 256 generation tokens, 3 runs averaged  
+Benchmark: ~47–59 prompt tokens → 256 generation tokens, 3 runs averaged  
 Device: M3 Pro · 18GB Unified Memory · macOS Sonoma · MLX 0.32.0 · mlx-lm 0.31.3  
 Date: 2026-07-15
 
-| Model | Quantization | Memory (GB) | Gen (tok/s) | Notes |
-|-------|-------------|-------------|-------------|-------|
-| **Llama 3.2 3B** | **INT4 (Q4)** | **1.7** | **59.9** ✅ | Measured on this machine |
-| Llama 3 8B | INT4 (Q4) | ~4.5 | ~45 | Run `--model mlx-community/Meta-Llama-3-8B-Instruct-4bit` |
-| Mistral 7B v0.3 | INT4 (Q4) | ~4.1 | ~48 | Run `--model mlx-community/Mistral-7B-Instruct-v0.3-4bit` |
-| Phi-3.5 Mini | INT4 (Q4) | ~2.3 | ~85 | Run `--model mlx-community/Phi-3.5-mini-instruct-4bit` |
+| Model | Quantization | Memory (GB) | Gen (tok/s) |
+|-------|-------------|-------------|-------------|
+| Llama 3.2 3B Instruct | INT4 (Q4) | 1.7 | **61.4** |
+| Phi-3.5 Mini Instruct | INT4 (Q4) | 2.0 | **51.1** |
+| Mistral 7B Instruct v0.3 | INT4 (Q4) | 3.8 | **29.0** |
+| Llama 3 8B Instruct | INT4 (Q4) | 4.9 | **28.2** |
 
-> ✅ = directly measured on this hardware. Run `python3 scripts/run_benchmark.py --all` to generate the full table.
+> All numbers directly measured on this hardware. Run `python3 scripts/run_benchmark.py --all` to reproduce.
 
 **Key insight:** INT4 quantization delivers ~2.5–3× speedup over FP16 with negligible accuracy loss on most tasks. The M3 Pro's 18GB unified memory comfortably runs 7B models at INT4 without swapping.
 
