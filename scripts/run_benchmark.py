@@ -151,7 +151,7 @@ def benchmark_model(hf_id: str, prompt: str, gen_tokens: int = 256, runs: int = 
 
     # Free model from memory
     del model
-    mx.metal.clear_cache() if hasattr(mx, 'metal') else None
+    mx.clear_cache() if hasattr(mx, 'metal') else None
 
     return result
 
@@ -159,7 +159,7 @@ def benchmark_model(hf_id: str, prompt: str, gen_tokens: int = 256, runs: int = 
 def _get_memory_gb() -> float:
     """Approximate GPU/unified memory used via mx."""
     try:
-        mem = mx.metal.get_peak_memory() if hasattr(mx, 'metal') else 0
+        mem = mx.get_peak_memory() if hasattr(mx, 'metal') else 0
         return mem / (1024 ** 3)
     except Exception:
         return 0.0
